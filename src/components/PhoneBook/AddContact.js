@@ -25,8 +25,8 @@ export const PhoneBook = ({ onSubmit }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    onSubmit({ id, name, number });
     stateReset();
-    return onSubmit({ id, name, number });
   };
 
   const stateReset = () => {
