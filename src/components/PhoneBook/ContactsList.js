@@ -16,7 +16,9 @@ export const ContactsList = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
   const visibleContacts = getFilteredContacts(contacts, filter);
-  const handleDelete = id => dispatch(deleteContact(id));
+  const handleDelete = id => {
+    dispatch(deleteContact(id));
+  };
   return (
     <>
       <h2>Contacts</h2>
@@ -25,7 +27,7 @@ export const ContactsList = () => {
           <StyledListItem key={id}>
             <span>{name}: </span>
             <span>{number}</span>
-            <StyledButton type="button" onClick={handleDelete(id)}>
+            <StyledButton type="button" onClick={() => handleDelete(id)}>
               Delete contact
             </StyledButton>
           </StyledListItem>
