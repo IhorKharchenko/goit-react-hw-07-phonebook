@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'components/redux/actions';
+import { addContact } from '../redux/contactsSlice';
 import { StyledForm, StyledLabel, StyledButton } from './PhoneBook.styled';
 
 export const PhoneBook = () => {
