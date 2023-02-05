@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeFilter } from '../redux/filterSlice';
 export const Filter = () => {
-  const filter = useSelector(getFilter);
+  const { filter } = useSelector(getFilter);
   const dispatch = useDispatch();
   const handleFilterChange = event => {
-    dispatch(changeFilter(event.target.value));
+    dispatch(changeFilter(event.currentTarget.value));
   };
 
   return (

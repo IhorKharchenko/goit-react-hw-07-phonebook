@@ -13,8 +13,8 @@ export const ContactsList = () => {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const { contacts } = useSelector(getContacts);
+  const { filter } = useSelector(getFilter);
   const visibleContacts = getFilteredContacts(contacts, filter);
   const handleDelete = id => {
     dispatch(deleteContact(id));
