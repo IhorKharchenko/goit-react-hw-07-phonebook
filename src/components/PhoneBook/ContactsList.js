@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledButton, StyledList, StyledListItem } from './PhoneBook.styled';
-import { getContacts, getFilter } from '../redux/selectors';
-import { deleteContact } from '../redux/contactsSlice';
+import {
+  getContacts,
+  getError,
+  getFilter,
+  getIsLoading,
+} from '../redux/selectors';
+import { fetchContacts, deleteContact } from './Operations';
 
 export const ContactsList = () => {
   const dispatch = useDispatch();
@@ -15,6 +20,11 @@ export const ContactsList = () => {
   };
   const { contacts } = useSelector(getContacts);
   const { filter } = useSelector(getFilter);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
   const visibleContacts = getFilteredContacts(contacts, filter);
   const handleDelete = id => {
     dispatch(deleteContact(id));
@@ -22,6 +32,7 @@ export const ContactsList = () => {
   return (
     <>
       <h2>Contacts</h2>
+      {isLoading && !error && <b>Request in progress...</b>}
       <StyledList>
         {visibleContacts.map(({ id, name, number }) => (
           <StyledListItem key={id}>

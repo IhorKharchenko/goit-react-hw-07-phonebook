@@ -1,16 +1,31 @@
+import { getContacts } from 'components/redux/selectors';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { addContact } from '../redux/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { addContact } from './Operations';
 import { StyledForm, StyledLabel, StyledButton } from './PhoneBook.styled';
 
 export const PhoneBook = () => {
   const dispatch = useDispatch();
-
+  const { contacts } = useSelector(getContacts);
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.target;
-    dispatch(addContact(form.name.value, form.number.value));
-    form.reset();
+    const newContact = {
+      name: form.name.value,
+      number: form.number.value,
+    };
+
+    if (contacts.some(contact => contact.name === newContact.name)) {
+      toast.warn(`${newContact.name} is alredy in your contacts`);
+      return;
+    } else if (contacts.some(contact => contact.number === newContact.number)) {
+      toast.warn(`${newContact.number} is alredy in your contacts`);
+      return;
+    } else {
+      dispatch(addContact(newContact));
+      form.reset();
+    }
   };
 
   return (
